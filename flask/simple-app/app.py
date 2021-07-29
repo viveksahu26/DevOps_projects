@@ -1,5 +1,7 @@
+import subprocess
 from flask import Flask, render_template
 from flask import request
+from subprocess import getoutput
 
 app = Flask(__name__)
 
@@ -28,25 +30,30 @@ def stop_container():
 #Show all running containers --> no input required
 @app.route("/show_running_containers")
 def show_running_containers():
-    html_code = render_template("docker.html")
-    return html_code
+    command = "docker ps"
+    output = subprocess.getoutput(command)
+    return "<pre>" +  output + "</pre>"
 
 #Show all stopped containers --> no input required
 @app.route("/show_stopped_containers")
 def show_stopped_containers():
-    html_code = render_template("kubernetes.html")
-    return html_code
+    command = "docker ps -a"
+    output = subprocess.getoutput(command)
+    return "<pre>" +  output + "</pre>"
 
 #Show all images --> no input required
 @app.route("/show_all_images")
 def show_all_images():
-    return render_template("index.html")
+    command = "docker images"
+    output = subprocess.getoutput(command)
+    return "<pre>" +  output + "</pre>"
 
 #Show all stopped containers --> no input required
 @app.route("/stop_all_containers")
 def stop_all_containers():
-    html_code = render_template("form.html")
-    return html_code
+    command = "docker rm -f $(docker ps -aq)"
+    output = subprocess.getoutput(command)
+    return "<pre>" +  output + "</pre>"
 
 #Delete image with name or image id --> image id or name is required
 @app.route("/delete_images")
@@ -56,7 +63,9 @@ def delete_images():
 #Delete all images --> no input required
 @app.route("/delete_all_images")
 def delete_all_images():
-    return "This is email page..."
+    command = "docker rm -f $(docker images)"
+    output = subprocess.getoutput(command)
+    return "<pre>" +  output + "</pre>"
 
 #Pull images --> image name required
 @app.route("/pull_images")

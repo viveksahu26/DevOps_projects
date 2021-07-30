@@ -1,0 +1,48 @@
+<!Doctype html>
+<html>
+<style>
+.btn-group button {
+  background-color:steelblue; /* Green background */
+  border: 1px solid skyblue; /* Green border */
+  color: white; /* White text */
+  padding: 1em; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 15%; /* Set a width if needed */
+  display:block; /* Make the buttons appear below each other */
+}
+
+.btn-group button:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color:tomato;
+}
+</style>
+<body style="background-color:deepskyblue;">
+    <h1 style="position:relative;text-align: center; font-size: 40px;font-family: 'Courier New', Courier, monospace;">⚜️<u>Docker</u>⚜️</h1>
+
+<div style="position: relative; left: 0px; top: 50px;" class="btn-group">
+    <h1>   MENU</h1>
+    <button onclick="create();" >Show Images</button>
+    <button>Show Containers</button>
+    <button>Pull Images</button>
+
+</div>
+<script>
+    function create(){
+            xhr = new XMLHttpRequest();
+            xhr.open('GET','http://192.168.43.51/show_all_images', 'true');
+            xhr.send();
+            xhr.onload=function (){
+                output = xhr.responseText;
+                document.getElementById("im").innerHTML = " ";
+                output = output + "\n\n!!! Container Created !!!";
+                document.getElementById("op").innerHTML = output;
+        
+   }
+}
+</script>
+</body>
+</html>
